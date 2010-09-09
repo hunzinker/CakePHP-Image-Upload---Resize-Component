@@ -1,0 +1,55 @@
+CakePHP Image Upload and Resize Component
+
+## This component has only been tested in CakePHP 1.2.X using PHP 5 ##
+
+Installation
+Place the component in your app/controllers/components/ directory.
+
+Purpose
+Simple component that accepts user specified params, an uploaded image and resizes the image
+via ImageMagick. If ImageMagick is not available, the component tries the GD library.
+
+Useage
+Place image_resize.php in your CakePHP components directory and follow the example below. 
+
+Controller
+class PhotosController extends AppController {
+	var $name = 'Photos';
+	var $uses = array('Photo');
+	var $helpers = array('Html', 'Form');	
+	var $components = array('ImageResize');
+	
+	function add() {
+		if (!empty($this->data)) {
+
+			$this->Photo->set($this->data);
+			$img = $this->data['Photo']['img_file'];	// In view: <?php echo $form->file('Photo.img_file'); ?>
+
+			if ($this->ImageResize->isUploadedFile($img)) {
+				// set the resize data for the FileUpload Component
+				// resize_data holds the resize settings
+				$prefs = array('resize_data' => array(RESIZE_WIDTH, '450', null));
+				$errors = $this->ImageResize->uploadFile($img, $prefs);
+				if (empty($errors)) {
+					if ($this->Photo->save($this->data)) {
+						$this->Session->setflash('You have successfully added the Photo.');
+						$this->redirect('/Photos/');
+					} else {
+						$this->Session->setflash('An error occurred while uploading the Photo.');
+						$this->redirect('/Photos/add');
+					} 
+				} else {
+					foreach ($errors as $key => $value) {
+						$this->Session->setflash('The following image resize error occured.<br />Error: ' . $value);
+						$this->redirect('/Photos/add');
+					}
+				}
+			} else {
+				$this->Photo->validates();
+			}
+		} 
+	}
+
+}
+
+Follow the example above with slight modifications to edit and update images.
