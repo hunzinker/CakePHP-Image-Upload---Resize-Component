@@ -1,6 +1,6 @@
 CakePHP Image Upload and Resize Component
 
-## This component has only been tested in CakePHP 1.2.X using PHP 5 ##
+## This component has been tested in CakePHP 1.2.X, 1.3.x and PHP 5 ##
 
 Installation
 Place the component in your app/controllers/components/ directory.
