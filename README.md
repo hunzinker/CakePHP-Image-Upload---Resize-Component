@@ -21,7 +21,7 @@ Place the component in your app/controllers/components/ directory.
             if (!empty($this->data)) {
 
                 $this->Photo->set($this->data);
-                $img = $this->data['Photo']['img_file'];	// In view: <?php echo $form->file('Photo.img_file'); ?>
+                $img = $this->data['Photo']['img_file'];	// In view: $form->file('Photo.img_file');
 
                 if ($this->ImageResize->isUploadedFile($img)) {
                     // set the resize data for the FileUpload Component
