@@ -10,6 +10,7 @@ Place the component in your app/controllers/components/ directory.
 
 ### Example 
 
+```php
     class PhotosController extends AppController {
         var $name = 'Photos';
         var $uses = array('Photo');
@@ -48,6 +49,7 @@ Place the component in your app/controllers/components/ directory.
         }
 
     }
+```
 
 ## Maintained By
 
